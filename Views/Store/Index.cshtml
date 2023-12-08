@@ -1,0 +1,92 @@
+﻿@model List<StoreViewModel>
+@{
+    ViewData["Title"] = "All Stores";
+}
+ 
+<a class="btn btn-secondary btn-lg" asp-action="Create">
+    <i class="bi bi-plus-circle-dotted"></i>
+    Add Store
+</a>
+@if (!Model.Any())
+{
+    <div class="alert alert-warning mt-5">
+        <h4 class="alert-heading">No games!</h4>
+        <p class="mb-0">No games were added yet.</p>
+    </div>
+}
+else
+{
+<div class="mt-5">
+  <table class="table">
+    <thead>
+        <tr>
+            
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="stor">
+               
+                <td >@item.Name</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.StoreId" class="btn btn-outline-secondary">
+                        Edit
+                    </a>
+                      <a href="javascript:;" class="btn btn-danger js-delete" data-id="@item.StoreId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+}
+@section Scripts 
+{
+    <script>
+        $(document).ready(function () {
+            $('.js-delete').on('click', function () {
+                var btn = $(this);
+               
+                var result=confirm('Are You Sure That You Need To Delete This Store?');
+                if (result) {
+                    $.ajax({
+                        url: '/Store/delete/' + btn.data('id'),
+                        success: function () {
+                            var StoreContainer = btn.parents('.stor');
+                            StoreContainer.addClass('animate__animated animate__zoomOut');
+
+                            setTimeout(function () {
+                                StoreContainer.remove();
+                            }, 1000);
+
+                            toastr.success('Store deleted');
+                        },
+                        error: function () {
+                            toastr.error('Something went wrong!');
+                        }
+                    });
+                }
+                
+                //if (result){ 
+                //    $.ajax({
+                //        url: '/Store/Delete/' + btn.data('id'),
+       
+                //        success: function () {
+                //            btn.closest('.stor').fadeOut();
+                //            toastr.success('Store Deleted Sucsessfully');
+                            
+                //        },
+                //        error: function () {
+                //            toastr.error('Something went wrong!');
+                //        }
+                //    )}
+                //}
+            })   
+        });
+
+      
+    </script>
+}
