@@ -1,5 +1,4 @@
 ﻿
-
 namespace StockApp.Controllers
 {
 
@@ -28,9 +27,10 @@ namespace StockApp.Controllers
             return View(model);
         }
 
-        
+
 
         // GET: Store/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -57,10 +57,11 @@ namespace StockApp.Controllers
             return View(model);
         }
 
-        
-       
+
+
 
         // GET: Store/Edit/ID
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var store = await _context.Stores.FindAsync(id);

@@ -11,7 +11,7 @@ namespace StockApp.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Define relationships here
+            //Define relationships here
             modelBuilder.Entity<Item>()
                 .HasOne(i => i.Store)
                 .WithMany(s => s.Items)
